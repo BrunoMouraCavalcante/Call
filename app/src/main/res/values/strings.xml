@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Call</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_name">Nome</string>
+    <string name="hint_lastname">Sobrenome</string>
+    <string name="hint_email">E-mail</string>
+    <string name="description_photo">Adicionar Foto</string>
+    <string name="description_delete">Remover</string>
+    <string name="description_save">Salvar</string>
+    <string name="description_cancel">Cancelar</string>
+    <string name="text_menu1">Reunião</string>
+    <string name="text_menu1_desc">Lance aqui as reuniões da equipe</string>
+    <string name="text_menu2">Sede</string>
+    <string name="text_menu2_desc">Lance aqui uma Sede</string>
+    <string name="text_menu3">Membros</string>
+    <string name="text_menu3_desc">Adicione e veja os membros da equipe</string>
+    <string name="text_menu4">Controle</string>
+    <string name="text_menu4_desc">Controle aqui a frequência da equipe</string>
+    <string name="text_btn_save">Salvar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="empty_student_list">Nenhum membro cadastrado</string>
+</resources>

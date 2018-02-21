@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/expandedAppBar</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppThemeYellow" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/menu3</item>
+        <item name="colorPrimaryDark">@color/menu3</item>
+        <item name="colorAccent">@color/menu3</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppThemeGreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/menu2</item>
+        <item name="colorPrimaryDark">@color/menu2</item>
+        <item name="colorAccent">@color/menu2</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/menu1</item>
+        <item name="colorPrimaryDark">@color/menu1</item>
+        <item name="colorAccent">@color/menu1</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppThemeRed" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/menu4</item>
+        <item name="colorPrimaryDark">@color/menu4</item>
+        <item name="colorAccent">@color/menu4</item>
+    </style>
+
+</resources>

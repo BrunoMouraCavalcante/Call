@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_view_item_menu">128dp</dimen>
+    <dimen name="image_view_menu">64dp</dimen>
+    <dimen name="separator_menu">96dp</dimen>
+    <dimen name="card_view_item_menu_height">160dp</dimen>
+</resources>

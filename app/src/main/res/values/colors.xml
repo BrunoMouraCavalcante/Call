@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffad43</color>
+    <color name="colorPrimaryDark">#ffad43</color>
+    <color name="colorAccent">#ffad43</color>
+    <color name="menu1">#1e90ff</color>
+    <color name="menu2">#00ff7f</color>
+    <color name="menu3">#FFB90F</color>
+    <color name="menu4">#ff3030</color>
+    <color name="expandedAppBar">#77999999</color>
+    <color name="late">#ffcc00</color>
+</resources>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_item_menu1"
+        android:layout_width="@dimen/card_view_item_menu"
+        android:layout_height="@dimen/card_view_item_menu_height"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="56dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_item_menu"
+            android:backgroundTint="@color/menu1"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_menu1"
+                android:layout_width="@dimen/image_view_menu"
+                android:layout_height="@dimen/image_view_menu"
+                android:scaleType="fitXY"
+                android:tint="@color/menu1"
+                app:srcCompat="@drawable/ic_date_range_white_48dp" />
+
+            <TextView
+                android:id="@+id/tv_menu1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_menu1" />
+
+            <View
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/darker_gray"
+                android:backgroundTint="@color/menu1" />
+
+            <TextView
+                android:id="@+id/tv_menu1_desc"
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="bottom|center"
+                android:text="@string/text_menu1_desc"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_item_menu2"
+        android:layout_width="@dimen/card_view_item_menu"
+        android:layout_height="@dimen/card_view_item_menu_height"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="56dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_item_menu"
+            android:backgroundTint="@color/menu2"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_menu2"
+                android:layout_width="@dimen/image_view_menu"
+                android:layout_height="@dimen/image_view_menu"
+                android:scaleType="fitXY"
+                android:tint="@color/menu2"
+                app:srcCompat="@drawable/ic_event_note_white_48dp" />
+
+            <TextView
+                android:id="@+id/tv_menu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_menu2" />
+
+            <View
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/darker_gray"
+                android:backgroundTint="@color/menu2" />
+
+            <TextView
+                android:id="@+id/tv_menu2_desc"
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="bottom|center"
+                android:text="@string/text_menu2_desc"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_item_menu3"
+        android:layout_width="@dimen/card_view_item_menu"
+        android:layout_height="@dimen/card_view_item_menu_height"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_item_menu2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_item_menu"
+            android:backgroundTint="@color/menu3"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_menu3"
+                android:layout_width="@dimen/image_view_menu"
+                android:layout_height="@dimen/image_view_menu"
+                android:scaleType="fitXY"
+                android:tint="@color/menu3"
+                app:srcCompat="@drawable/ic_perm_identity_white_48dp" />
+
+            <TextView
+                android:id="@+id/tv_menu3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_menu3" />
+
+            <View
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/darker_gray"
+                android:backgroundTint="@color/menu3" />
+
+            <TextView
+                android:id="@+id/tv_menu3_desc"
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="bottom|center"
+                android:text="@string/text_menu3_desc"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_item_menu4"
+        android:layout_width="@dimen/card_view_item_menu"
+        android:layout_height="@dimen/card_view_item_menu_height"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_item_menu2" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_item_menu"
+            android:backgroundTint="@color/menu4"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_menu4"
+                android:layout_width="@dimen/image_view_menu"
+                android:layout_height="@dimen/image_view_menu"
+                android:scaleType="fitXY"
+                android:tint="@color/menu4"
+                app:srcCompat="@drawable/ic_error_outline_white_48dp" />
+
+            <TextView
+                android:id="@+id/tv_menu4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_menu4" />
+
+            <View
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/darker_gray"
+                android:backgroundTint="@color/menu4" />
+
+            <TextView
+                android:id="@+id/tv_menu4_desc"
+                android:layout_width="@dimen/separator_menu"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="bottom|center"
+                android:text="@string/text_menu4_desc"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
