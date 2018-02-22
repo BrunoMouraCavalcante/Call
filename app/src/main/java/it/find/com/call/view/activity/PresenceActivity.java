@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -44,6 +45,7 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
     private Spinner mSpinner;
     private Calendar myCalendar = Calendar.getInstance();
     private EditText mEtDate;
+    private TextView mTvEmptyListText;
     private DatePickerDialog.OnDateSetListener date;
     private ConstraintLayout mClProgressBar;
     private ConstraintLayout mClData;
@@ -118,6 +120,8 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        mTvEmptyListText = findViewById(R.id.tvEmptyList);
     }
 
     public void goToPage() {
@@ -167,7 +171,8 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
     @Override
     public void createListStudents() {
         mRecyclerView.setVisibility(View.VISIBLE);
-        //mTvEmptyListText.setVisibility(View.GONE);
+        btnAccept.setClickable(true);
+        mTvEmptyListText.setVisibility(View.GONE);
         if (mAdapter == null) {
             mAdapter = new PresenceAdapter(presenter.getStudents());
         } else {
@@ -175,14 +180,16 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
         }
         mAdapter.setPresenter(presenter.getSmiPresenter().getThis());
         mAdapter.notifyDataSetChanged();
-        //mAdapter.setPresenter(presenter);
         mRecyclerView.setAdapter(mAdapter);
         showProgressBar(false);
     }
 
     @Override
     public void createEmptyList() {
-
+        mRecyclerView.setVisibility(View.GONE);
+        mTvEmptyListText.setVisibility(View.VISIBLE);
+        btnAccept.setClickable(false);
+        showProgressBar(false);
     }
 
     public TranslateAnimation shakeError() {

@@ -31,7 +31,6 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
     private ArrayList<Student> students;
     private ArrayList<StudentMeeting> studentsMeeting;
     private String type;
-    private int meeting_id;
 
     private StudentMeetingInternalPresenter smiPresenter;
 
@@ -140,11 +139,6 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
         }
     }
 
-    private void setMeetindIdToStudents() {
-        for(StudentMeeting sm : studentsMeeting) {
-            sm.setMeeting_id(meeting_id);
-        }
-    }
 
     private boolean validadeStudentsMeeting() {
         for(StudentMeeting sm : studentsMeeting) {

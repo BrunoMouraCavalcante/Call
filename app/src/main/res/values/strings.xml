@@ -23,4 +23,5 @@
     <string name="empty_student_list">Nenhum membro cadastrado</string>
     <string name="sede">Sede</string>
     <string name="reuniao">Reunião</string>
+    <string name="text_empty_list">Não conseguimos carregar os membros, tente mais tarde</string>
 </resources>
