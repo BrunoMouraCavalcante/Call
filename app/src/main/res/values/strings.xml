@@ -21,4 +21,6 @@
     <string name="text_btn_save">Salvar</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="empty_student_list">Nenhum membro cadastrado</string>
+    <string name="sede">Sede</string>
+    <string name="reuniao">Reunião</string>
 </resources>

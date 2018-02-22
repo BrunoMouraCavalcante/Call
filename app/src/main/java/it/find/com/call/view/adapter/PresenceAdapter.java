@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 import it.find.com.call.R;
+import it.find.com.call.interfaces.students_in_meetings.StudentMeetingImp;
 import it.find.com.call.presenter.data.Student;
 
 /**
@@ -22,6 +23,7 @@ import it.find.com.call.presenter.data.Student;
 
 public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHolder> {
     private ArrayList<Student> mDataset;
+    private  StudentMeetingImp.PresenterImpl presenter;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -34,6 +36,7 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
         public ImageButton mIbLate;
         public int position;
         public int id;
+        public StudentMeetingImp.PresenterImpl presenter;
         public ViewHolder(View v) {
             super(v);
             mTextView = (TextView) v.findViewById(R.id.text_view_id);
@@ -51,10 +54,13 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
             if (v.getId() == R.id.ib_presence) {
                 //Toast.makeText(v.getContext(), "ITEM PRESSED = " + String.valueOf(getAdapterPosition())+ " Presence", Toast.LENGTH_LONG).show();
                 setColors(Color.GREEN,0,0);
+                presenter.setStudentStatus(position,1);
+            } else if (v.getId() == R.id.ib_late) {
+                setColors(0,0, ResourcesCompat.getColor(v.getResources(), R.color.late, null));
+                presenter.setStudentStatus(position,2);
             } else if (v.getId() == R.id.ib_missed) {
                 setColors(0, Color.RED,0);
-            } else if (v.getId() == R.id.ib_late) {
-                setColors(0,0,ResourcesCompat.getColor(v.getResources(), R.color.late, null));
+                presenter.setStudentStatus(position,3);
             }
         }
 
@@ -73,6 +79,7 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
     public void setAdapterMembers(ArrayList<Student> myDataset) {
         mDataset = myDataset;
     }
+    public void setPresenter(StudentMeetingImp.PresenterImpl presenter) { this.presenter = presenter; }
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -94,6 +101,7 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
         holder.mTextView.setText(mDataset.get(position).getName());
         holder.position = position;
         holder.id = mDataset.get(position).getId();
+        holder.presenter = this.presenter;
     }
 
     // Return the size of your dataset (invoked by the layout manager)

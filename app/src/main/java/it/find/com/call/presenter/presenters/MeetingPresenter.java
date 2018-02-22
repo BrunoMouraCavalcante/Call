@@ -5,13 +5,16 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import it.find.com.call.interfaces.meetings.MeetingImpl;
+import it.find.com.call.interfaces.students_in_meetings.StudentMeetingImp;
 import it.find.com.call.model.models.MeetingModel;
+import it.find.com.call.model.models.StudentMeetingModel;
 import it.find.com.call.model.models.StudentModel;
-import it.find.com.call.model.network.interfaces.MeetingsApi;
 import it.find.com.call.model.network.interfaces.StudentApi;
+import it.find.com.call.model.network.interfaces.StudentMeetingApi;
 import it.find.com.call.model.network.response.models.Response;
 import it.find.com.call.presenter.data.Meeting;
 import it.find.com.call.presenter.data.Student;
+import it.find.com.call.presenter.data.StudentMeeting;
 
 /**
  * Created by Bruno on 13-Feb-18.
@@ -26,12 +29,22 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
     private MeetingImpl.ViewImpl view;
     private ArrayList<Meeting> meetings;
     private ArrayList<Student> students;
+    private ArrayList<StudentMeeting> studentsMeeting;
     private String type;
+    private int meeting_id;
+
+    private StudentMeetingInternalPresenter smiPresenter;
 
     public MeetingPresenter(Context context) {
         this.context = context;
         this.modelMeeting = new MeetingModel();
         this.modelStudent = new StudentModel();
+        this.smiPresenter = new StudentMeetingInternalPresenter();
+        this.smiPresenter.model = new StudentMeetingModel();
+    }
+
+    public StudentMeetingInternalPresenter getSmiPresenter() {
+        return smiPresenter;
     }
 
     @Override
@@ -61,20 +74,9 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
 
     @Override
     public void createMeeting(Meeting meeting) {
-        modelMeeting.saveMeeting(new MeetingsApi.MeetingsResponse() {
-            @Override
-            public void onSuccess(Response response) {
-                view.cleanFields();
-                showProgressBar(false);
-                view.showToast(getMeetType()+" criada com sucesso!");
-            }
-
-            @Override
-            public void onError(Response response) {
-                showProgressBar(false);
-                view.showToast("Falha ao criar a "+getMeetType()+ " :( tente novamente mais tarde");
-            }
-        }, meeting);
+        if (validadeStudentsMeeting()) {
+            smiPresenter.createStudentMeeting(meeting, studentsMeeting);
+        }
     }
 
     @Override
@@ -107,6 +109,7 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
             @Override
             public void onError(Response response) {
                 students = new ArrayList<>();
+                studentsMeeting = new ArrayList<>();
                 view.createEmptyList();
             }
         });
@@ -117,11 +120,84 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
         return this.students;
     }
 
+    public void setStudentMeetingView(StudentMeetingImp.ViewImpl view) { this.smiPresenter.setView(view); }
+
     private void verifyListEmpty() {
+        generateStudentsMeeting();
         if (students.isEmpty()) {
             view.createEmptyList();
         } else {
             view.createListStudents();
+        }
+    }
+
+    private void generateStudentsMeeting() {
+        studentsMeeting = new ArrayList<>();
+        for(Student s : students) {
+            StudentMeeting sm = new StudentMeeting();
+            sm.setStudent_id(s.getId());
+            studentsMeeting.add(sm);
+        }
+    }
+
+    private void setMeetindIdToStudents() {
+        for(StudentMeeting sm : studentsMeeting) {
+            sm.setMeeting_id(meeting_id);
+        }
+    }
+
+    private boolean validadeStudentsMeeting() {
+        for(StudentMeeting sm : studentsMeeting) {
+            if (sm.getStatus() == null || sm.getStatus() < 1 || sm.getStatus() > 3 ) {
+                view.showToast("Preencha o status de todos os membros");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public class StudentMeetingInternalPresenter implements StudentMeetingImp.PresenterImpl {
+
+        private StudentMeetingModel model;
+        private StudentMeetingImp.ViewImpl view;
+
+
+        @Override
+        public void setView(StudentMeetingImp.ViewImpl view) {
+            this.view = view;
+        }
+
+        @Override
+        public void setStudentStatus(int position, int status) {
+            if (studentsMeeting != null && !studentsMeeting.isEmpty()) {
+                studentsMeeting.get(position).setStatus(status);
+            }
+        }
+
+        @Override
+        public void createStudentMeeting(final Meeting meeting, final ArrayList<StudentMeeting> studentsMeeting) {
+            model.createStudentsAndMeeting(new StudentMeetingApi.StudentMeetingResponse() {
+                @Override
+                public void onSuccess(Response response) {
+                    showProgressBar(false);
+                    view.showToast(getMeetType()+" criada com sucesso!");
+                }
+
+                @Override
+                public void onError(Response response) {
+                    view.showProgressBar(false);
+                    view.showToast("Falha ao criar a "+getMeetType()+ " :( tente novamente mais tarde");
+                }
+            },meeting, studentsMeeting);
+        }
+
+        @Override
+        public ArrayList<StudentMeeting> getStudenMeetings() {
+            return studentsMeeting;
+        }
+
+        public StudentMeetingImp.PresenterImpl getThis(){
+            return this;
         }
     }
 }

@@ -4,6 +4,7 @@ import it.find.com.call.model.network.response.models.Response;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -23,8 +24,14 @@ public interface StudentMeetingApi {
     @GET("api/chamada/StudentMeeting/student/{id}")
     Call<Response> loadStudentMeetingsByStudent(@Path("id") int id);
 
+    @Multipart
     @POST("api/chamada/StudentMeeting")
-    Call<Response> saveStudentMeetings(@Part("student") RequestBody student);
+    Call<Response> saveStudentMeetings(@Part("students") RequestBody student);
+
+    @Multipart
+    @POST("api/chamada/StudentMeeting/save")
+    Call<Response> saveStudentsAndMeeting(@Part("meeting") RequestBody meeting,
+                                          @Part("students") RequestBody student);
 
     interface StudentMeetingResponse {
         void onSuccess(Response response);

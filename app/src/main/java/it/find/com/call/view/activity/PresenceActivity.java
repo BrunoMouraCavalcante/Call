@@ -26,6 +26,8 @@ import java.util.Locale;
 
 import it.find.com.call.R;
 import it.find.com.call.interfaces.meetings.MeetingImpl;
+import it.find.com.call.interfaces.students_in_meetings.StudentMeetingImp;
+import it.find.com.call.presenter.data.Meeting;
 import it.find.com.call.presenter.presenters.MeetingPresenter;
 import it.find.com.call.view.adapter.PresenceAdapter;
 
@@ -33,7 +35,7 @@ import it.find.com.call.view.adapter.PresenceAdapter;
  * Created by Bruno on 16-Jan-18.
  */
 
-public class PresenceActivity extends AppCompatActivity implements MeetingImpl.ViewImpl{
+public class PresenceActivity extends AppCompatActivity implements MeetingImpl.ViewImpl, StudentMeetingImp.ViewImpl{
 
     private Button btnAccept;
     private RecyclerView mRecyclerView;
@@ -55,6 +57,7 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
         int spin = getIntent().getExtras().getInt("spin");
         presenter = new MeetingPresenter(this.getApplicationContext());
         presenter.setView(this);
+        presenter.setStudentMeetingView(this);
 
         mClProgressBar = findViewById(R.id.cl_progressBar);
         mClData = findViewById(R.id.cl_data);
@@ -63,7 +66,13 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
             @Override
             public void onClick(View v) {
                 if(validateFields()) {
-                    presenter.createMeeting(null);
+                    presenter.setMeetingType((mSpinner.getSelectedItemPosition() == 1 ?
+                            getString(R.string.reuniao):
+                            getString(R.string.sede)));
+                    Meeting meeting = new Meeting();
+                    meeting.setType((mSpinner.getSelectedItemPosition()+1));
+                    meeting.setDate(meeting.convertToTimestamp(mEtDate.getText().toString()));
+                    presenter.createMeeting(meeting);
                 }
             }
         });
@@ -80,7 +89,7 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         mSpinner = (Spinner) findViewById(R.id.spinner);
-        String[] test = new String[]{"Reunião","Sede"};
+        String[] test = new String[]{getString(R.string.reuniao),getString(R.string.sede)};
         ArrayAdapter<String> adapter= new ArrayAdapter<String>(PresenceActivity.this,android.R.layout.simple_spinner_item, test);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
@@ -119,7 +128,6 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
     private void updateLabel() {
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, new Locale("pt", "BR"));
-
         mEtDate.setText(sdf.format(myCalendar.getTime()));
     }
 
@@ -165,6 +173,7 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
         } else {
             mAdapter.setAdapterMembers(presenter.getStudents());
         }
+        mAdapter.setPresenter(presenter.getSmiPresenter().getThis());
         mAdapter.notifyDataSetChanged();
         //mAdapter.setPresenter(presenter);
         mRecyclerView.setAdapter(mAdapter);
