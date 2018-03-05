@@ -23,7 +23,7 @@ public class StudentActivity extends AppCompatActivity implements StudentImpl.Ba
         presenter = new StudentPresenter(this.getApplicationContext());
         presenter.setView(this);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        mVpViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mVpViewPager = (ViewPager) findViewById(R.id.vp_control);
         mVpViewPager.setAdapter(new StudentPageAdapter(getSupportFragmentManager(),StudentActivity.this, presenter));
 
         // Give the TabLayout the ViewPager
@@ -34,12 +34,12 @@ public class StudentActivity extends AppCompatActivity implements StudentImpl.Ba
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().equals("Lista")) {
-                    android.support.v4.app.Fragment fragment = ((StudentPageAdapter)mVpViewPager.getAdapter()).getRegisteredFragment(1);
-                    if (fragment != null) {
-                        //((ListStudentFragment) fragment).createListStudents();
-                    }
-                }
+//                if (tab.getText().equals("Lista")) {
+//                    android.support.v4.app.Fragment fragment = ((StudentPageAdapter)mVpViewPager.getAdapter()).getRegisteredFragment(1);
+//                    if (fragment != null) {
+//                        //((ListStudentFragment) fragment).createListStudents();
+//                    }
+//                }
             }
 
             @Override

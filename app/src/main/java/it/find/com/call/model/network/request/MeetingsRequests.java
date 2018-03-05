@@ -91,4 +91,35 @@ public class MeetingsRequests {
             listener.onError(null);
         }
     }
+
+    public static void getMeetingsByType(final MeetingsApi.MeetingsResponse listener, final int type) throws IOException {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        MeetingsApi meetingsApi = retrofit.create(MeetingsApi.class);
+        Call<Response> call = meetingsApi.loadMeetingsByType(type);
+        call.enqueue(new Callback<Response>() {
+
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                try {
+                    if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                        listener.onError(response.body());
+                    } else {
+                        listener.onSuccess(response.body());
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, this.getClass().getEnclosingMethod().getName()+" get "+e.getMessage());
+                    listener.onError(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                listener.onError(null);
+            }
+        });
+    }
 }

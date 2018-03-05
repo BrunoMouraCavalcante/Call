@@ -9,18 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.find.com.call.R;
+import it.find.com.call.interfaces.students_in_meetings.ControlImpl;
 
 public class SedeFragment extends Fragment {
 
+    private static ControlImpl.presenterImpl presenter;
 
     public SedeFragment() {
         // Required empty public constructor
     }
 
-    public static SedeFragment newInstance() {
+    public static SedeFragment newInstance(ControlImpl.presenterImpl sPresenter) {
         SedeFragment fragment = new SedeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        presenter = sPresenter;
         return fragment;
     }
 

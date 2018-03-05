@@ -2,7 +2,6 @@ package it.find.com.call.view.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.constraint.ConstraintLayout;
@@ -122,11 +121,6 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
         });
 
         mTvEmptyListText = findViewById(R.id.tvEmptyList);
-    }
-
-    public void goToPage() {
-        Intent intent = new Intent(this,NewMemberActivity.class);
-        startActivity(intent);
     }
 
     private void updateLabel() {

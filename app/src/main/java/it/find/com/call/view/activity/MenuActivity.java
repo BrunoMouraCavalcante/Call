@@ -58,6 +58,13 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        mCvMenu4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToPage(ControlActivity.class, null);
+            }
+        });
+
         verifyPermissions();
     }
 

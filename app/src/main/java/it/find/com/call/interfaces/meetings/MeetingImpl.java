@@ -19,6 +19,7 @@ public interface MeetingImpl {
         void saveMeeting(MeetingsApi.MeetingsResponse handler, Meeting meeting);
         void updateMeeting(MeetingsApi.MeetingsResponse handler, Meeting meeting);
         void deleteMeeting(MeetingsApi.MeetingsResponse handler, int id);
+        void getMeetingsByType(MeetingsApi.MeetingsResponse handler, int type);
     }
 
     interface ViewImpl {

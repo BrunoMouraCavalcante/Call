@@ -39,4 +39,13 @@ public class MeetingModel implements MeetingImpl.ModelImpl{
     public void deleteMeeting(MeetingsApi.MeetingsResponse handler, int id) {
 
     }
+
+    @Override
+    public void getMeetingsByType(MeetingsApi.MeetingsResponse handler, int type) {
+        try {
+            MeetingsRequests.getMeetingsByType(handler, type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

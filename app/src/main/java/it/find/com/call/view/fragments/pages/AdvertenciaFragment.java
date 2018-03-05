@@ -12,23 +12,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.find.com.call.R;
-import it.find.com.call.view.adapter.ControlAdapter;
+import it.find.com.call.interfaces.students_in_meetings.ControlImpl;
 import it.find.com.call.presenter.data.User;
+import it.find.com.call.view.adapter.ControlAdapter;
 
 public class AdvertenciaFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ControlAdapter mAdapter;
+    private static ControlImpl.presenterImpl presenter;
 
     public AdvertenciaFragment() {
         // Required empty public constructor
     }
 
-    public static AdvertenciaFragment newInstance() {
+    public static AdvertenciaFragment newInstance(ControlImpl.presenterImpl cPresenter) {
         AdvertenciaFragment fragment = new AdvertenciaFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        presenter = cPresenter;
         return fragment;
     }
 

@@ -3,7 +3,8 @@
     package="it.find.com.call">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.MenuActivity"
+        <activity
+            android:name=".view.activity.MenuActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -20,20 +22,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.NewMemberActivity"
-                  android:windowSoftInputMode="adjustResize"
-                  android:configChanges="orientation"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ControlActivity"
-                  android:configChanges="orientation"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.PresenceActivity"
-                  android:configChanges="orientation"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.StudentActivity"
-                  android:windowSoftInputMode="adjustPan"
-                  android:configChanges="orientation"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.NewMemberActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.activity.ControlActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.PresenceActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.StudentActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".view.activity.ModifyMeetingActivity"></activity>
     </application>
 
 </manifest>
