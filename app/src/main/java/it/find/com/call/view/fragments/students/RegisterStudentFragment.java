@@ -1,11 +1,15 @@
 package it.find.com.call.view.fragments.students;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -130,13 +134,49 @@ public class RegisterStudentFragment extends Fragment implements StudentImpl.Vie
     private View.OnClickListener listenerSave = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Student student = new Student();
-            student.setName(mEtName.getText().toString());
-            student.setLastName(mEtLastName.getText().toString());
-            student.setEmail(mEtEmail.getText().toString());
-            presenter.createStudent(student);
+            if (validateFields()) {
+                Student student = new Student();
+                student.setName(mEtName.getText().toString());
+                student.setLastName(mEtLastName.getText().toString());
+                student.setEmail(mEtEmail.getText().toString());
+                presenter.createStudent(student);
+            }
         }
     };
+
+    public boolean validateFields() {
+        if (mEtName.getText().toString().trim().isEmpty()) {
+            Vibrator v = (Vibrator) presenter.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            mEtName.requestFocus();
+            mEtName.startAnimation(shakeError());
+            v.vibrate(500);
+            return false;
+        }
+
+        if (mEtLastName.getText().toString().trim().isEmpty()) {
+            Vibrator v = (Vibrator) presenter.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            mEtLastName.requestFocus();
+            mEtLastName.startAnimation(shakeError());
+            v.vibrate(500);
+            return false;
+        }
+
+        if (mEtEmail.getText().toString().trim().isEmpty()) {
+            Vibrator v = (Vibrator) presenter.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            mEtEmail.requestFocus();
+            mEtEmail.startAnimation(shakeError());
+            v.vibrate(500);
+            return false;
+        }
+        return true;
+    }
+
+    public TranslateAnimation shakeError() {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(500);
+        shake.setInterpolator(new CycleInterpolator(7));
+        return shake;
+    }
 
     private void animationShowButton(ImageButton view) {
         view.animate()

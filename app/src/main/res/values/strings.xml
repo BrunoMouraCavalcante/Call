@@ -25,4 +25,5 @@
     <string name="reuniao">Reunião</string>
     <string name="text_empty_list">Não conseguimos carregar os membros, tente mais tarde</string>
     <string name="reuniao_empty_list">Não encontramos nenhuma reunião</string>
+    <string name="sede_empty_list">Não encontramos nenhuma sede</string>
 </resources>

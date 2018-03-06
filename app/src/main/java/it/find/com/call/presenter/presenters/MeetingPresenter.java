@@ -15,6 +15,7 @@ import it.find.com.call.model.network.response.models.Response;
 import it.find.com.call.presenter.data.Meeting;
 import it.find.com.call.presenter.data.Student;
 import it.find.com.call.presenter.data.StudentMeeting;
+import it.find.com.call.presenter.data.StudentMeetingWithStudent;
 
 /**
  * Created by Bruno on 13-Feb-18.
@@ -48,7 +49,7 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
 
     @Override
     public Context getContext() {
-        return null;
+        return context;
     }
 
     @Override
@@ -75,6 +76,8 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
     public void createMeeting(Meeting meeting) {
         if (validadeStudentsMeeting()) {
             smiPresenter.createStudentMeeting(meeting, studentsMeeting);
+        } else {
+            showProgressBar(false);
         }
     }
 
@@ -119,7 +122,7 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
         return this.students;
     }
 
-    public void setStudentMeetingView(StudentMeetingImp.ViewImpl view) { this.smiPresenter.setView(view); }
+    public void setStudentMeetingView(StudentMeetingImp.ViewImpl view) { this.smiPresenter.setView(view, getContext()); }
 
     private void verifyListEmpty() {
         generateStudentsMeeting();
@@ -153,12 +156,11 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
     public class StudentMeetingInternalPresenter implements StudentMeetingImp.PresenterImpl {
 
         private StudentMeetingModel model;
-        private StudentMeetingImp.ViewImpl view;
-
+        private StudentMeetingImp.ViewImpl viewChild;
 
         @Override
-        public void setView(StudentMeetingImp.ViewImpl view) {
-            this.view = view;
+        public void setView(StudentMeetingImp.ViewImpl view, Context context) {
+
         }
 
         @Override
@@ -186,8 +188,28 @@ public class MeetingPresenter implements MeetingImpl.PresenterImpl {
         }
 
         @Override
-        public ArrayList<StudentMeeting> getStudenMeetings() {
-            return studentsMeeting;
+        public void updateStudentMeeting() {
+
+        }
+
+        @Override
+        public ArrayList<StudentMeetingWithStudent> getStudenMeetingsList() {
+            return null;
+        }
+
+        @Override
+        public void fillListStudents() {
+
+        }
+
+        @Override
+        public ArrayList<StudentMeeting> getFinalStudentMeetingList() {
+            return null;
+        }
+
+        @Override
+        public Context getContext() {
+            return null;
         }
 
         public StudentMeetingImp.PresenterImpl getThis(){

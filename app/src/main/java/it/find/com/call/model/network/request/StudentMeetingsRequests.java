@@ -28,6 +28,7 @@ public class StudentMeetingsRequests {
 
     public static void getStudentsMeeting(final StudentMeetingApi.StudentMeetingResponse listener) throws IOException {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(RequestOkHttp.okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -39,8 +40,44 @@ public class StudentMeetingsRequests {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 try {
-                    if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                    if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                         listener.onError(response.body());
+                    } else if (response.body() == null) {
+                        listener.onError(null);
+                    } else {
+                        listener.onSuccess(response.body());
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, this.getClass().getEnclosingMethod().getName()+" get "+e.getMessage());
+                    listener.onError(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                listener.onError(null);
+            }
+        });
+    }
+
+    public static void getStudentsMeetingByMeeting(final StudentMeetingApi.StudentMeetingResponse listener, int meeting_id) throws IOException {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(RequestOkHttp.okHttpClient)
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        StudentMeetingApi studentMeetingApi = retrofit.create(StudentMeetingApi.class);
+        Call<Response> call = studentMeetingApi.loadStudentMeetingsByMeeting(meeting_id);
+        call.enqueue(new Callback<Response>() {
+
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                try {
+                    if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
+                        listener.onError(response.body());
+                    } else if (response.body() == null) {
+                        listener.onError(null);
                     } else {
                         listener.onSuccess(response.body());
                     }
@@ -97,6 +134,7 @@ public class StudentMeetingsRequests {
     public static void saveStudentsAndMeeting(final StudentMeetingApi.StudentMeetingResponse listener, Meeting meeting, ArrayList<StudentMeeting> listStudents) {
         try {
             Retrofit retrofit = new Retrofit.Builder()
+                    .client(RequestOkHttp.okHttpClient)
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -112,8 +150,50 @@ public class StudentMeetingsRequests {
                 @Override
                 public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                     try {
-                        if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                        if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                             listener.onError(response.body());
+                        } else if (response.body() == null) {
+                            listener.onError(null);
+                        } else {
+                            listener.onSuccess(response.body());
+                        }
+                    } catch (Exception e) {
+                        Log.d(TAG, this.getClass().getEnclosingMethod().getName()+" save "+e.getMessage());
+                        listener.onError(null);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Response> call, Throwable t) {
+                    listener.onError(null);
+                }
+            });
+        } catch (Exception e) {
+            listener.onError(null);
+        }
+    }
+
+    public static void updateStudentMeeting(final StudentMeetingApi.StudentMeetingResponse listener, ArrayList<StudentMeeting> listStudents) {
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(RequestOkHttp.okHttpClient)
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            ObjectMapper mapper = new ObjectMapper();
+            StudentMeetingApi studentMeetingApi = retrofit.create(StudentMeetingApi.class);
+            String data = mapper.writeValueAsString(listStudents);
+            RequestBody studentPart = RequestBody.create(okhttp3.MultipartBody.FORM, data);
+            Call<Response> call = studentMeetingApi.updateStudentMeeting(studentPart);
+            call.enqueue(new Callback<Response>() {
+                @Override
+                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                    try {
+                        if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
+                            listener.onError(response.body());
+                        } else if (response.body() == null) {
+                            listener.onError(null);
                         } else {
                             listener.onSuccess(response.body());
                         }

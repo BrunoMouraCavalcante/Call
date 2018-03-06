@@ -1,5 +1,6 @@
 package it.find.com.call.view.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,20 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 
 import it.find.com.call.R;
 import it.find.com.call.interfaces.students_in_meetings.StudentMeetingImp;
-import it.find.com.call.presenter.data.Student;
+import it.find.com.call.presenter.data.StudentMeetingWithStudent;
 
 /**
- * Created by Bruno on 16-Jan-18.
+ * Created by Bruno on 05-Mar-18.
  */
 
-public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHolder> {
-    private ArrayList<Student> mDataset;
+public class ModifyMeetingAdapter extends RecyclerView.Adapter<ModifyMeetingAdapter.ViewHolder>{
+    private ArrayList<StudentMeetingWithStudent> mDataset;
     private  StudentMeetingImp.PresenterImpl presenter;
 
     // Provide a reference to the views for each data item
@@ -35,6 +34,7 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
         public ImageButton mIbLate;
         public int position;
         public int id;
+        public int status;
         public StudentMeetingImp.PresenterImpl presenter;
         public ViewHolder(View v) {
             super(v);
@@ -46,6 +46,16 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
             mIbPresence.setOnClickListener(this);
             mIbMissed.setOnClickListener(this);
             mIbLate.setOnClickListener(this);
+        }
+
+        public void paintWithStatus(View v) {
+            if (status == 1) {
+                setColors(ResourcesCompat.getColor(v.getResources(), R.color.presence, null),0, 0);
+            } else if (status == 2) {
+                setColors(0,0, ResourcesCompat.getColor(v.getResources(), R.color.late, null));
+            } else if (status == 3) {
+                setColors(0,ResourcesCompat.getColor(v.getResources(), R.color.miss, null), 0);
+            }
         }
 
         @Override
@@ -63,7 +73,7 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
             }
         }
 
-        private void setColors (@Nullable int p,@Nullable int m,@Nullable int l) {
+        private void setColors (@Nullable int p, @Nullable int m, @Nullable int l) {
             mIbPresence.setColorFilter(p);
             mIbMissed.setColorFilter(m);
             mIbLate.setColorFilter(l);
@@ -71,18 +81,18 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public PresenceAdapter(ArrayList<Student> myDataset) {
+    public ModifyMeetingAdapter(ArrayList<StudentMeetingWithStudent> myDataset) {
         mDataset = myDataset;
     }
 
-    public void setAdapterMembers(ArrayList<Student> myDataset) {
+    public void setAdapterMembers(ArrayList<StudentMeetingWithStudent> myDataset) {
         mDataset = myDataset;
     }
     public void setPresenter(StudentMeetingImp.PresenterImpl presenter) { this.presenter = presenter; }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public PresenceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public ModifyMeetingAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                          int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
@@ -97,10 +107,12 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset.get(position).getName());
+        holder.mTextView.setText(mDataset.get(position).getFirst_name());
         holder.position = position;
         holder.id = mDataset.get(position).getId();
+        holder.status = mDataset.get(position).getStatus();
         holder.presenter = this.presenter;
+        holder.paintWithStatus(holder.mTextView);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -108,4 +120,5 @@ public class PresenceAdapter extends RecyclerView.Adapter<PresenceAdapter.ViewHo
     public int getItemCount() {
         return mDataset.size();
     }
+
 }

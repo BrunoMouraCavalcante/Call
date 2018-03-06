@@ -1,5 +1,6 @@
 package it.find.com.call.presenter.presenters;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.util.ArrayList;
@@ -23,10 +24,18 @@ public class ControlPresenter implements ControlImpl.presenterImpl {
     private ControlImpl.SedeViewImpl sedeView;
     private ControlImpl.ControlViewImpl controlView;
     private ArrayList<Reuniao> reuniaoList;
+    private ArrayList<Reuniao> sedeList;
+    private Activity activity;
 
-    public ControlPresenter(Context context) {
+    public ControlPresenter(Context context, Activity activity) {
         this.model = new MeetingModel();
         this.context = context;
+        this.activity = activity;
+    }
+
+    @Override
+    public Activity getActivity() {
+        return activity;
     }
 
     @Override
@@ -94,7 +103,30 @@ public class ControlPresenter implements ControlImpl.presenterImpl {
 
     @Override
     public void fillListSede() {
+        baseView.showProgressBar(true);
+        model.getMeetingsByType(new MeetingsApi.MeetingsResponse() {
+            @Override
+            public void onSuccess(Response response) {
+                sedeList = new ArrayList<>();
+                for (int i = 0 ; i < response.getSuccess().getData().getRecords().size() ; i++) {
+                    Reuniao reuniao = new Reuniao();
+                    reuniao.setMeeting_id(Integer.parseInt(response.getSuccess().getData().getRecords().get(i).get(0)));
+                    reuniao.setType(Integer.parseInt(response.getSuccess().getData().getRecords().get(i).get(1)));
+                    reuniao.setDate(reuniao.getDateFromString(response.getSuccess().getData().getRecords().get(i).get(2)));
+                    reuniao.setPresence(Integer.parseInt(response.getSuccess().getData().getRecords().get(i).get(3)));
+                    reuniao.setLate(Integer.parseInt(response.getSuccess().getData().getRecords().get(i).get(4)));
+                    reuniao.setMiss(Integer.parseInt(response.getSuccess().getData().getRecords().get(i).get(5)));
+                    sedeList.add(reuniao);
+                }
+                sedeView.showSedeList();
+            }
 
+            @Override
+            public void onError(Response response) {
+                sedeList = new ArrayList<>();
+                sedeView.showSedeList();
+            }
+        }, 2);
     }
 
     @Override
@@ -108,9 +140,7 @@ public class ControlPresenter implements ControlImpl.presenterImpl {
     }
 
     @Override
-    public void getListSede() {
-
-    }
+    public ArrayList<Reuniao> getListSede() { return sedeList; }
 
     @Override
     public void getListControl() {

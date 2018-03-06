@@ -25,6 +25,7 @@ public class StudentsRequests {
 
     public static void getStudents(final StudentApi.StudentResponse listener) throws IOException {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(RequestOkHttp.okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -36,8 +37,10 @@ public class StudentsRequests {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 try {
-                    if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                    if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                         listener.onError(response.body());
+                    } else if (response.body() == null) {
+                        listener.onError(null);
                     } else {
                         listener.onSuccess(response.body());
                     }
@@ -56,6 +59,7 @@ public class StudentsRequests {
 
     public static void saveStudents(final StudentApi.StudentResponse listener, Student student) {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(RequestOkHttp.okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -68,8 +72,10 @@ public class StudentsRequests {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 try {
-                    if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                    if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                         listener.onError(response.body());
+                    } else if (response.body() == null) {
+                        listener.onError(null);
                     } else {
                         listener.onSuccess(response.body());
                     }
@@ -88,6 +94,7 @@ public class StudentsRequests {
 
     public static void deleterStudent(final StudentApi.StudentResponse listener, Integer id) {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(RequestOkHttp.okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -98,8 +105,10 @@ public class StudentsRequests {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 try {
-                    if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                    if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                         listener.onError(response.body());
+                    } else if (response.body() == null) {
+                        listener.onError(null);
                     } else {
                         listener.onSuccess(response.body());
                     }

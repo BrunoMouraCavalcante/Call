@@ -1,6 +1,8 @@
 package it.find.com.call.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -24,9 +26,8 @@ public class ControlActivity extends AppCompatActivity implements ControlImpl.Ba
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
-        setTitle("Controle de Presença");
 
-        presenter = new ControlPresenter(this);
+        presenter = new ControlPresenter(this, this);
         presenter.setBaseView(this);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         mPbProgressBar = findViewById(R.id.pb_control);
@@ -54,5 +55,23 @@ public class ControlActivity extends AppCompatActivity implements ControlImpl.Ba
     @Override
     public void showToast(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showProgressBar(true);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showProgressBar(false);
+            }
+        }, 2000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        recreate();
     }
 }

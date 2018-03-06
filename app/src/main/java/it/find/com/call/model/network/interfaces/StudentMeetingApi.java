@@ -33,6 +33,10 @@ public interface StudentMeetingApi {
     Call<Response> saveStudentsAndMeeting(@Part("meeting") RequestBody meeting,
                                           @Part("students") RequestBody student);
 
+    @Multipart
+    @POST("api/chamada/StudentMeeting/update")
+    Call<Response> updateStudentMeeting(@Part("students") RequestBody student);
+
     interface StudentMeetingResponse {
         void onSuccess(Response response);
         void onError(Response response);

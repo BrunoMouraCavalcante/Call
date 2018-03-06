@@ -9,4 +9,6 @@
     <color name="menu4">#ff3030</color>
     <color name="expandedAppBar">#77999999</color>
     <color name="late">#ffcc00</color>
+    <color name="presence">#669900</color>
+    <color name="miss">#ff4444</color>
 </resources>

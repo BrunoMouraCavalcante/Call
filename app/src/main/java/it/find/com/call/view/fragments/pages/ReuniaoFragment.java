@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import it.find.com.call.R;
@@ -23,6 +24,7 @@ public class ReuniaoFragment extends Fragment implements ControlImpl.ReuniaoView
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView mTvEmptyListText;
     public ReuniaoAdapter mAdapter;
+    private ImageView mIvPresence, mIvLate, mIvMiss;
 
     public ReuniaoFragment() {
         // Required empty public constructor
@@ -58,6 +60,10 @@ public class ReuniaoFragment extends Fragment implements ControlImpl.ReuniaoView
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
+        mIvPresence = view.findViewById(R.id.iv_presence);
+        mIvLate = view.findViewById(R.id.iv_late);
+        mIvMiss = view.findViewById(R.id.iv_miss);
+
         presenter.fillListReuniao();
 
         return view;
@@ -80,25 +86,29 @@ public class ReuniaoFragment extends Fragment implements ControlImpl.ReuniaoView
     }
 
     @Override
-    public void showToast(String message) {
-
-    }
+    public void showToast(String message) { presenter.showToast(message); }
 
     @Override
     public void showReuniaoList() {
         if (presenter.getListReuniao().size() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
+            mIvPresence.setVisibility(View.VISIBLE);
+            mIvLate.setVisibility(View.VISIBLE);
+            mIvMiss.setVisibility(View.VISIBLE);
             mTvEmptyListText.setVisibility(View.GONE);
             if (mAdapter == null) {
-                mAdapter = new ReuniaoAdapter(presenter.getListReuniao());
+                mAdapter = new ReuniaoAdapter(presenter.getListReuniao() , 1);
             } else {
-                mAdapter.setReuniaoList(presenter.getListReuniao());
+                mAdapter.setReuniaoList(presenter.getListReuniao(), 1);
             }
             mAdapter.notifyDataSetChanged();
             mAdapter.setPresenter(presenter);
             mRecyclerView.setAdapter(mAdapter);
             showProgressBar(false);
         } else {
+            mIvPresence.setVisibility(View.GONE);
+            mIvLate.setVisibility(View.GONE);
+            mIvMiss.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
             mTvEmptyListText.setVisibility(View.VISIBLE);
             showProgressBar(false);

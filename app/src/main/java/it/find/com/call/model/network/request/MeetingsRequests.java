@@ -24,8 +24,10 @@ public class MeetingsRequests {
 
     private static String BASE_URL = "https://apifindit.herokuapp.com/";
 
+
     public static void getMeetings(final MeetingsApi.MeetingsResponse listener) throws IOException {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(RequestOkHttp.okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -37,8 +39,10 @@ public class MeetingsRequests {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 try {
-                    if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                    if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                         listener.onError(response.body());
+                    } else if (response.body() == null) {
+                        listener.onError(null);
                     } else {
                         listener.onSuccess(response.body());
                     }
@@ -58,6 +62,7 @@ public class MeetingsRequests {
     public static void saveMeetings(final MeetingsApi.MeetingsResponse listener, Meeting meeting) {
         try {
             Retrofit retrofit = new Retrofit.Builder()
+                    .client(RequestOkHttp.okHttpClient)
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -71,8 +76,10 @@ public class MeetingsRequests {
                 @Override
                 public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                     try {
-                        if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                        if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                             listener.onError(response.body());
+                        } else if (response.body() == null) {
+                            listener.onError(null);
                         } else {
                             listener.onSuccess(response.body());
                         }
@@ -94,6 +101,7 @@ public class MeetingsRequests {
 
     public static void getMeetingsByType(final MeetingsApi.MeetingsResponse listener, final int type) throws IOException {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(RequestOkHttp.okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -105,8 +113,10 @@ public class MeetingsRequests {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 try {
-                    if (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null) {
+                    if (!response.isSuccessful() || (response.body()!= null && response.body().getError() != null && response.body().getError().getCode() != null)) {
                         listener.onError(response.body());
+                    } else if (response.body() == null) {
+                        listener.onError(null);
                     } else {
                         listener.onSuccess(response.body());
                     }

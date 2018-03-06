@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import it.find.com.call.R;
 import it.find.com.call.interfaces.student.StudentImpl;
@@ -74,7 +75,7 @@ public class ListStudentFragment extends Fragment implements StudentImpl.ViewLis
 
     @Override
     public void showToast(String message) {
-
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT). show();
     }
 
     @Override

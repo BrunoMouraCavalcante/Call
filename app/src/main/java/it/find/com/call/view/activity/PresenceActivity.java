@@ -38,6 +38,7 @@ import it.find.com.call.view.adapter.PresenceAdapter;
 public class PresenceActivity extends AppCompatActivity implements MeetingImpl.ViewImpl, StudentMeetingImp.ViewImpl{
 
     private Button btnAccept;
+    private Button btnCancel;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private PresenceAdapter mAdapter;
@@ -62,12 +63,14 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
 
         mClProgressBar = findViewById(R.id.cl_progressBar);
         mClData = findViewById(R.id.cl_data);
+        btnCancel = findViewById(R.id.btnCancel);
         btnAccept = findViewById(R.id.btnSave);
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validateFields()) {
-                    presenter.setMeetingType((mSpinner.getSelectedItemPosition() == 1 ?
+                    showProgressBar(true);
+                    presenter.setMeetingType(((mSpinner.getSelectedItemPosition()+1) == 1 ?
                             getString(R.string.reuniao):
                             getString(R.string.sede)));
                     Meeting meeting = new Meeting();
@@ -75,6 +78,13 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
                     meeting.setDate(meeting.convertToTimestamp(mEtDate.getText().toString()));
                     presenter.createMeeting(meeting);
                 }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cleanScreen();
             }
         });
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -123,6 +133,11 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
         mTvEmptyListText = findViewById(R.id.tvEmptyList);
     }
 
+    private void cleanScreen() {
+        mEtDate.setText("");
+        recreate();
+    }
+
     private void updateLabel() {
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, new Locale("pt", "BR"));
@@ -144,6 +159,9 @@ public class PresenceActivity extends AppCompatActivity implements MeetingImpl.V
     public void showToast(String message) {
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void showStudentMeetingList() { }
 
     @Override
     public boolean validateFields() {

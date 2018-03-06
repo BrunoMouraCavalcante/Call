@@ -6,6 +6,43 @@
     android:layout_height="match_parent"
     tools:context="it.find.com.call.view.activity.ControlActivity">
 
+    <ImageView
+        android:id="@+id/iv_presence"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
+        android:tint="@android:color/holo_green_dark"
+        android:visibility="invisible"
+        app:layout_constraintRight_toLeftOf="@+id/iv_late"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_done_black_48dp" />
+
+    <ImageView
+        android:id="@+id/iv_late"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
+        android:tint="@color/late"
+        android:visibility="invisible"
+        app:layout_constraintRight_toLeftOf="@+id/iv_miss"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_schedule_black_48dp" />
+
+    <ImageView
+        android:id="@+id/iv_miss"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
+        android:tint="@android:color/holo_red_light"
+        android:visibility="invisible"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_clear_black_48dp" />
+
     <TextView
         android:id="@+id/tv_reuniao_empty_list"
         android:layout_width="wrap_content"
@@ -26,10 +63,10 @@
         android:id="@+id/reuniao_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:scrollbars="vertical"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toBottomOf="@+id/iv_presence">
 
     </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

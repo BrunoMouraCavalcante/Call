@@ -20,7 +20,16 @@ public class StudentMeetingModel implements StudentMeetingImp.ModelImpl {
         try {
             StudentMeetingsRequests.getStudentsMeeting(handler);
         } catch (IOException e) {
-            e.printStackTrace();
+            handler.onError(null);
+        }
+    }
+
+    @Override
+    public void getStudentMeetingByMeeting(StudentMeetingApi.StudentMeetingResponse handler, int meeting_id) {
+        try {
+            StudentMeetingsRequests.getStudentsMeetingByMeeting(handler, meeting_id);
+        } catch (IOException e) {
+            handler.onError(null);
         }
     }
 
@@ -36,6 +45,6 @@ public class StudentMeetingModel implements StudentMeetingImp.ModelImpl {
 
     @Override
     public void updateStudentMeeting(StudentMeetingApi.StudentMeetingResponse handler, ArrayList<StudentMeeting> studentsMeeting) {
-        //TODO
+        StudentMeetingsRequests.updateStudentMeeting(handler, studentsMeeting);
     }
 }
